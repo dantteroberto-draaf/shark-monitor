@@ -1,0 +1,34 @@
+// api/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Sensor {
+  id             String   @id @default(uuid())
+  nome           String
+  localizacao    String
+  bateria        Int      @default(100)
+  status_alerta  Boolean  @default(false)
+  ultima_leitura DateTime @default(now())
+  alertas        Alerta[]
+
+  @@map("sensores") // Nome da tabela no banco
+}
+
+model Alerta {
+  id         String   @id @default(uuid())
+  sensorId   String // Chave estrangeira
+  nivel      String // Ex: "BAIXO", "MEDIO", "CRITICO"
+  confirmado Boolean  @default(false) // Se a equipe confirmou ser tubarão
+  criadoEm   DateTime @default(now())
+
+  // Configuração da relação com a tabela Sensor
+  sensor Sensor @relation(fields: [sensorId], references: [id], onDelete: Cascade)
+
+  @@map("alertas")
+}
