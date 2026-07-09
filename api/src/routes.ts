@@ -1,0 +1,13 @@
+import { Router } from "express";
+import SensorController from "./controllers/SensorController.js";
+
+const routes: Router = Router();
+
+const sensorController = new SensorController;
+
+routes.get("/sensores", sensorController.getAllSensores);
+routes.post("/sensores", sensorController.createSensor);
+routes.patch("/sensores/:id", sensorController.updateSensor);
+routes.delete("/sensores/:id", sensorController.deleteSensor);
+
+export default routes;
