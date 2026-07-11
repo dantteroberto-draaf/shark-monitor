@@ -12,6 +12,8 @@ model Sensor {
   id             String   @id @default(uuid())
   nome           String
   localizacao    String
+  latitude       Float
+  longitude      Float
   bateria        Int      @default(100)
   status_alerta  Boolean  @default(false)
   ultima_leitura DateTime @default(now())
